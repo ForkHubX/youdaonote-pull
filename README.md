@@ -10,6 +10,10 @@
 - 由于「笔记」类型文件下载后默认为 `Xml` 或者是 `Json` 格式，不是正常笔记内容，**默认将其转换为 `Markdown` 格式**
 - 由于有道云笔记图床图片不能在有道云笔记外显示，**默认将其下载到本地，或指定上传到 [SM.MS](https://sm.ms)**
 
+## 非技术人员使用
+
+如果你是非技术人员，也提供[可直接本地运行程序](https://github.com/DeppWang/youdaonote-pull/releases/)，不需要安装 Git、Python 和下载代码。具体使用教程请看[更简单的「有道云笔记」导出与备份](https://depp.wang/2024/simple-youdaonote-pull/)
+
 ## 使用步骤
 
 - [视频教程](https://www.bilibili.com/video/BV11F411F7vG/?share_source=copy_web&vd_source=8bd019082f4e243f4bb5c3b6fabf4dd8)
@@ -85,9 +89,11 @@ pip install -r requirements.txt
 }
 ```
 
-由于有道云笔记登录升级，**目前脚本不能使用账号密码登录，只能使用 `Cookies` 登录。**
+由于有道云笔记登录升级，加了图形验证吗。**目前脚本不能使用账号密码登录，只能使用 `Cookies` 登录。**
 
-获取 `Cookies` 方式：
+你可以通过安装插件「[Cookie-copy](https://chromewebstore.google.com/detail/cookie-copy/igfcbpdchlohbhjdfbcimhbpajlglaac?hl=zh-CN&utm_source=ext_sidebar)」快速复制 Cookie。
+
+或者直接在浏览器 DevTools 中获取 `Cookies`：
 
 1. 在浏览器如 Chrome 中使用账号密码或者其他方式登录有道云笔记
 2. 打开 DevTools (F12)，Network 下找「主」请求（一般是第一个），再找 `Cookie`
@@ -137,7 +143,7 @@ pip install -r requirements.txt
 }
 ```
 
-* `local_dir`：选填，本地存放导出文件的文件夹，不填则默认为当前文件夹
+* `local_dir`：选填，本地存放导出文件的文件夹（绝对路径），不填则默认为当前文件夹
 * `ydnote_dir`：选填，有道云笔记指定导出文件夹名，不填则导出所有文件
 * `smms_secret_token`：选填， [SM.MS](https://sm.ms) 的 `Secret Token`（注册后 -> Dashboard -> API Token），用于上传笔记中有道云图床图片到 SM.MS 图床，不填则只下载到本地（`youdaonote-images` 文件夹），`Markdown` 中使用本地链接
 * `is_relative_path`：选填，在 MD 文件中图片 / 附件是否采用相对路径展示，不填或 false 为绝对路径，true 为相对路径    
@@ -211,7 +217,7 @@ python pull.py   # Windows
 
 发现有道云笔记最新的 Mac 客户端和网页端去除了导出所有笔记的功能！这是什么逻辑，怕用户跑了么。所以在原来 pull 脚本的基础上修改得到此脚本。
 
-现在我使用 [Obsidian](https://obsidian.md/) + GitHub + [Working Copy](https://workingcopyapp.com/) 实现自动同步笔记和手机查看编辑的功能，很香。[使用教程](https://catcoding.me/p/obsidian-for-programmer/)
+现在我使用 [Obsidian](https://obsidian.md/) + iCloud + 1Writer 实现自动同步笔记和手机查看编辑的功能，很香。[使用教程](https://depp.wang/2024/my-obsidian-experience/)
 
 ## 贡献
 

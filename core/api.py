@@ -1,6 +1,9 @@
 import json
+import os
 
 import requests
+
+from core.common import get_script_directory
 
 
 class YoudaoNoteApi(object):
@@ -37,8 +40,11 @@ class YoudaoNoteApi(object):
             "sec-ch-ua-mobile": "?0",
             "sec-ch-ua-platform": '"macOS"',
         }
-
-        self.cookies_path = cookies_path if cookies_path else "cookies.json"
+        self.cookies_path = (
+            cookies_path
+            if cookies_path
+            else os.path.join(get_script_directory(), "cookies.json")
+        )
         self.cstk = None
 
     def login_by_cookies(self) -> str:

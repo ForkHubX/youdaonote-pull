@@ -18,6 +18,7 @@ from win32_setctime import setctime
 
 from core import log
 from core.api import YoudaoNoteApi
+from core.common import get_script_directory
 from core.covert import YoudaoNoteConvert
 from core.image import ImagePull
 
@@ -46,8 +47,6 @@ class YoudaoNotePull(object):
     有道云笔记 Pull 封装
     """
 
-    CONFIG_PATH = "config.json"
-
     def __init__(self):
         self.root_local_dir = None  # 本地文件根目录
         self.youdaonote_api = None
@@ -60,7 +59,12 @@ class YoudaoNotePull(object):
         :param config_path: config 文件路径
         :return: (config_dict, error_msg)
         """
-        config_path = config_path if config_path else self.CONFIG_PATH
+
+        config_path = (
+            config_path
+            if config_path
+            else os.path.join(get_script_directory(), "config.json")
+        )
         with open(config_path, "rb") as f:
             config_str = f.read().decode("utf-8")
 
@@ -90,7 +94,7 @@ class YoudaoNotePull(object):
         if not local_dir:
             add_dir = test_default_dir if test_default_dir else "youdaonote"
             # 兼容 Windows 系统，将路径分隔符（\\）替换为 /
-            local_dir = os.path.join(os.getcwd(), add_dir).replace("\\", "/")
+            local_dir = os.path.join(get_script_directory(), add_dir).replace("\\", "/")
 
         # 如果指定的本地文件夹不存在，创建文件夹
         if not os.path.exists(local_dir):
@@ -154,7 +158,11 @@ class YoudaoNotePull(object):
         if youdao_file_suffix == MARKDOWN_SUFFIX:
             file_type = FileType.MARKDOWN
             return file_type
-        elif youdao_file_suffix == ".note" or youdao_file_suffix == ".clip":
+        elif (
+            youdao_file_suffix == ".note"
+            or youdao_file_suffix == ".clip"
+            or youdao_file_suffix == ""
+        ):
             response = self.youdaonote_api.get_file_by_id(file_id)
             # 2、如果文件以 `<?xml` 开头
             if response.content[:5] == b"<?xml":

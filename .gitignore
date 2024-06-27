@@ -6,3 +6,9 @@ cookies.json
 __pycache__
 test-pull
 logs
+.vscode
+build
+dist
+*.spec
+wine
+xiaobai
